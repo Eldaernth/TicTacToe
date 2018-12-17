@@ -51,7 +51,6 @@ def title():
                                                                T:::::::::T    oo:::::::::::oo   ee:::::::::::::e
                                                                TTTTTTTTTTT      ooooooooooo       eeeeeeeeeeeeee\n""")
 
-
 def game():
     subprocess.call("clear",shell=True)
     title()
@@ -81,21 +80,19 @@ def credit():
     
 def win1_score():
     win1=0
-    subprocess.call("clear",shell=True)
     win1+=1
     return win1
 
 def tie_score():
     tie=0
-    subprocess.call("clear",shell=True)
     tie+=1
     return tie
 
 def win2_score():
     win2=0
-    subprocess.call("clear",shell=True)
     win2+=1
-    return win2    
+    return win2  
+
 def exitgame():
     subprocess.call("clear",shell=True)
     print("Good bye!")
@@ -124,16 +121,19 @@ def board(map):
     print(map[7]+"|"+map[8]+"|"+map[9])
     print("-----")
 
-def winning_condition(map,state, counter):
+def winning_condition(map,state):
     if map[1] == "x" and map[2] == "x" and map[3] == "x" or map[4] == "x" and map[5] == "x" and map[6] == "x" or map[7] == "x" and map[8] == "x" and map[9] == "x" or map[1] == "x" and map[4] == "x" and map[7] == "x" or map[2] == "x" and map[5]  == "x" and map[8] == "x" or map[3] == "x" and map[6] == "x" and map[9] == "x" or map[1] == "x" and map[5] == "x" and map[9] == "x" or map[7] == "x" and map[5] == "x" and map[3] == "x":
-        print ("Player 1 won:  "+str(win1_score()))
+        print ("Player 1 won:  " + str(win1_score()))
         state == False
-    if map[1] == "o" and map[2] == "o" and map[3] == "o" or map[4] == "o" and map[5] == "o" and map[6] == "o" or map[7] == "o" and map[8] == "o" and map[9] == "o" or map[1] == "o" and map[4] == "o" and map[7] == "o" or map[2] == "o" and map[5]  == "o" and map[8] == "o" or map[3] == "o" and map[6] == "o" and map[9] == "o" or map[1] == "o" and map[5] == "o" and map[9] == "o" or map[7] == "o" and map[5] == "o" and map[3] == "o":
-        print ("Player 2 won:  ")+str(win2_score())
+        return state
+    elif map[1] == "o" and map[2] == "o" and map[3] == "o" or map[4] == "o" and map[5] == "o" and map[6] == "o" or map[7] == "o" and map[8] == "o" and map[9] == "o" or map[1] == "o" and map[4] == "o" and map[7] == "o" or map[2] == "o" and map[5]  == "o" and map[8] == "o" or map[3] == "o" and map[6] == "o" and map[9] == "o" or map[1] == "o" and map[5] == "o" and map[9] == "o" or map[7] == "o" and map[5] == "o" and map[3] == "o":
+        print ("Player 2 won:  ") + str(win2_score())
         state == False
-    if counter == 9:
-        print("Draw:"+str(tie_score()))
+        return state
+    elif " " not in map:
+        print("Draw:" + str(tie_score()))
         state == False
+        return state
 
 def choice(map, counter):
     try:
@@ -143,8 +143,10 @@ def choice(map, counter):
         if cho == 'q':
             mainMenu()
         else:
+            subprocess.call("clear",shell=True)
             print('Invalid input')
             board(map)
+            choice(map,counter)
     else:
         if counter % 2 == 1:
             if map[cho] != "x":
@@ -156,27 +158,27 @@ def choice(map, counter):
                 map[cho] = "x"
             else:
                 choice(map,counter)          
+    
     subprocess.call("clear",shell=True)
     board(map)      
 
 def main():   
-    map = ["0","1","2","3","4","5","6","7","8","9"]
+    map = ["1"," "," "," "," "," "," "," "," "," "]
     i = 0
+    counter = 0
     run = True
-    counter=0
     while run == True:
         board(map)
-        choice(map, counter)
+        choice(map,counter)
         subprocess.call("clear",shell=True)
-        winning_condition(map,run,counter)
+        if winning_condition(map,run) == True:
+            break
         i += 1
         counter +=1
-    if counter == 8:
-        print('draw1')
-        restart = input("Press r to restart") 
-        if restart == "r":
-            main()
-        else:
-            print("Invalid input")
+    restart = input("Press r to restart ") 
+    if restart == "r":
+        main()
+    else:
+        print("Invalid input")
 mainMenu()
 main()
