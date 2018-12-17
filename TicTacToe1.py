@@ -1,5 +1,4 @@
 import subprocess
-import keyboard
 
 def title():
     print("""                                     TTTTTTTTTTTTTTTTTTTTTTT  iiii                                                             
