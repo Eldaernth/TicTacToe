@@ -96,6 +96,7 @@ def win2_score():
 def exitgame():
     subprocess.call("clear",shell=True)
     print("Good bye!")
+
     exit()
 
 def mainMenu():
